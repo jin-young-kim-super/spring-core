@@ -1,10 +1,7 @@
 package hello.core.beanfind;
 
-import hello.core.AppConfig;
-import hello.core.discount.DiscountPolicy;
 import hello.core.member.MemberRepository;
-import hello.core.member.MemoryMemberRespitory;
-import org.junit.jupiter.api.Assertions;
+import hello.core.member.MemoryMemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
@@ -25,12 +22,12 @@ public class ApplicationContextSameBeanFindTest {
     static class SameBeanConfig {
         @Bean
         public MemberRepository memberRepository1() {
-            return new MemoryMemberRespitory();
+            return new MemoryMemberRepository();
         }
 
         @Bean
         public MemberRepository memberRepository2() {
-            return new MemoryMemberRespitory();
+            return new MemoryMemberRepository();
         }
     }
 
@@ -46,7 +43,7 @@ public class ApplicationContextSameBeanFindTest {
     @DisplayName("중복 오류 발생 시 : 빈 이름 지정")
     void findBeanByTypeDuplicate2() {
         MemberRepository memberRepository = ac.getBean("memberRepository2", MemberRepository.class);
-        assertThat(memberRepository).isInstanceOf(MemoryMemberRespitory.class);
+        assertThat(memberRepository).isInstanceOf(MemoryMemberRepository.class);
     }
 
     @Test
