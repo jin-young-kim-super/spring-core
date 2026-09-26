@@ -8,7 +8,11 @@ import hello.core.member.MemberServiceImpl;
 import hello.core.member.MemoryMemberRespitory;
 import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+
+@Configuration
 public class AppConfig {
 
     /**
@@ -18,18 +22,22 @@ public class AppConfig {
      * 아래처럼 리팩터링함으로써 애플리케이션 전체 구성을 한 눈에 파악할 수가 있다.
      */
 
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
     }
 
-    private MemberRepository memberRepository() {
+    @Bean
+    public MemberRepository memberRepository() {
         return new MemoryMemberRespitory();
     }
 
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(),discountPolicy());
     }
 
+    @Bean
     public DiscountPolicy discountPolicy() {
         return new FixDiscountPolicy();
     }
