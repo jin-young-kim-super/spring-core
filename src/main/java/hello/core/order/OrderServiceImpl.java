@@ -8,10 +8,14 @@ import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRespitory;
 
 public class OrderServiceImpl implements OrderService{
-    // OCP,DIP 위반
-    private final MemberRepository memberRepository = new MemoryMemberRespitory();
-    //private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
