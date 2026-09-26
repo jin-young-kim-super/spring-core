@@ -11,7 +11,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class OrderApp {
 
     public static void main(String[] args) {
-
+        // ApllicationContext : 보통, 스프링 컨테이너라고 부른다
+        // -> XML 기반으로도 컨테이너 생성 가능하지만, 애노테이션 기반으로 만드는 것이 추세(스프링 부트도 디폴트가 애노테이션 기반)
         ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 
         MemberService memberService = ac.getBean("memberService", MemberService.class);
