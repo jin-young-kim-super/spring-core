@@ -13,6 +13,7 @@ public class AutoAppConfigTest {
 
     @Test
     void basicScan() {
+        // ConflictingBeanDefinitionException 발생!!
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class);
         MemberService memberService = ac.getBean(MemberService.class);
         assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
