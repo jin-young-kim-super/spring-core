@@ -5,6 +5,7 @@ import hello.core.member.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,4 +37,23 @@ public class SingletonTest {
 
         assertThat(singletonService1).isSameAs(singletonService2);
     }
+
+    /**
+     * 스프링은 싱글톤의 단점을 모두 제거한 DI 컨테이너를 자동으로 만들어 준다
+     */
+    @Test
+    @DisplayName("스프링 싱글톤 DI 컨테이너")
+    void springDIcontainer() {
+
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        MemberService memberService1 = ac.getBean("memberService", MemberService.class);
+        MemberService memberService2 = ac.getBean("memberService", MemberService.class);
+
+        assertThat(memberService1).isSameAs(memberService2);
+    }
+
+
+
+
 }
