@@ -16,10 +16,11 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
     /**
-     * 현재 AppConfig의 문제점
-     * -> 애플리케이션에서 사용되는 모든 인터페이스 목록과 그에 따른 구현체 정보가 한 눈에 안 보인다.
-     * MemberService, OrderService인터페이스는 보이지만 MemoryRepository, DiscountPolicy 인터페이스와 그 구현체가 파악이 안된다
-     * 아래처럼 리팩터링함으로써 애플리케이션 전체 구성을 한 눈에 파악할 수가 있다.
+     * MemoryMemberRepository 객체는 아래 과정에서 2번 호출돼 싱글톤이 꺠지는 것처럼 보인다
+     * 1. memberService() -> new MemoryMemberRepository()
+     * 2. orderService() -> new MemoryMemberRespository()
+     * →　＠Configuration에 의해서 위 같은 상황에도 불구하고 싱글톤이 보장된다.
+     * @Configuration은 싱글톤 등록 보장을 위한 것이나 다름없다. 구체적인 동작 방식에 대해서는 다음 시간에 설명하겠다
      */
 
     @Bean
@@ -29,6 +30,7 @@ public class AppConfig {
 
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("AppConfig :: memberRespository()"); // 스프링 빈 등록 시, 이 로그는 딱 1번만 출력된다! 즉 memberRespository()가 1번만 호출돼서 싱글톤 등록을 보장한다
         return new MemoryMemberRepository();
     }
 
