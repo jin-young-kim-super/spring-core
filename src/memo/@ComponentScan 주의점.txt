@@ -1,0 +1,8 @@
+@ComponentScan
+class AutoConfig{}
+-> 스프링 부트를 이용하면 @ComponentScan 클래스를 만들지 않아도 @Component 애노테이션이 붙은 클래스를 자동 빈 등록한다. 
+그러나 지금은 스프링 부트를 사용하지 않고 순수 스프링을 사용하여 자동 등록하여야 하기 떄문에 같이 @ComponentScan 클래스를 만들어 줘야 한다.
+※스프링 부트를 사용하면 자동으로 자동 컴포넌트 스캔을 하여 빈 등록을 해준다. 그러나 내부적으로는 @ComponentScan 클래스가 이미 부트 안에 내장이 돼 있는 것 뿐이다.
+ex)
+AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class);
+을 통해 AutoAppConfig 클래스를 통해 순수 스프링이 컨테이너를 내부적으로 자동 등록 해주는 것 뿐이다.

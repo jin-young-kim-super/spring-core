@@ -1,10 +1,17 @@
 package hello.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberServiceImpl implements MemberService{
 
     // OCP,DIP 위반
     private final MemberRepository memberRepository;
 
+    @Autowired
+    // 스프링 컨테이너에서 MemberRepository 타입을 찾아서 자동 의존 관계 주입
+    // -> ac.getBean(MemberRepository.class)를 통해 의존 관계 조회
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
