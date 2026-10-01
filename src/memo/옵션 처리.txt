@@ -1,0 +1,27 @@
+주입할 빈이 스프링 컨테이너에 없어도 되는 경우도 허용되어야 한다. 
+-> @Autowired는 required=true가 디폴트 설정돼 있어서, 만약 자동 주입 대상 빈이 없을 경우 오류가 발생하며 애플리케이션이 애초에 빌드가 안 된다. 
+그러나 의존 관계 주입을 선택적으로 안 해도 그걸 정상으로 봐야 하는 경우도 있다. 
+
+자동 주입 대상 빈이 없는 경우를 허용하는 방법
+@Autowired(required=false) : 자동 주입 대상이 없으면 애초에 수정자를 호출하지 x
+@Nullable : 자동 주입 대상이 없으면 null을 입력
+Optional<> : 자동 주입 대상이 없으면 에러 없이, Optional.empty가 반환
+
+
+//호출 안됨
+@Autowired(required = false)
+public void setNoBean1(Member member) {
+ System.out.println("setNoBean1 = " + member);
+}
+
+//null 호출
+@Autowired
+public void setNoBean2(@Nullable Member member) { // 반드시 jakarta.annotation.Nullable를 사용해야 함(JUNIT이 제공하는 @Nullable을 사용하면 x)
+ System.out.println("setNoBean2 = " + member);
+}
+
+//Optional.empty 호출
+@Autowired(required = false)
+public void setNoBean3(Optional<Member> member) {
+    System.out.println("setNoBean3 = " + member);
+}
