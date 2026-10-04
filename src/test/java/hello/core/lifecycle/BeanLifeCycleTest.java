@@ -21,7 +21,7 @@ public class BeanLifeCycleTest {
 
     @Configuration
     static class LifeCycleConfig {
-        @Bean(initMethod = "init", destroyMethod = "close")
+        @Bean
         public NetworkClient networkClient() {
             NetworkClient networkClient = new NetworkClient(); // 객체 생성
             networkClient.setUrl("http://wwww...."); // 의존 관계 주입

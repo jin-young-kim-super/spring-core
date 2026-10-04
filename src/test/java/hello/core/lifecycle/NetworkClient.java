@@ -1,6 +1,9 @@
 package hello.core.lifecycle;
 
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 public class NetworkClient {
 
     private String url;
@@ -29,12 +32,14 @@ public class NetworkClient {
     }
 
     // 초기화 콜백 메서드
+    @PostConstruct
     public void init()  {
         connect(); // 초기화 작업
         send("초기화 연결 메시지 전송");
     }
 
     // 소멸전 콜백 메서드
+    @PreDestroy
     public void close() {
         disconnect();
     }
