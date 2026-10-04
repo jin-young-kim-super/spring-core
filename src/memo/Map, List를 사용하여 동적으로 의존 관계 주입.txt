@@ -1,0 +1,67 @@
+public class AllBeanTest {
+@Autowired는 우선적으로 타입으로 빈을 조회하기에 똑같은 타입의 빈이 등록이 되어 있으면 그 타입의 자식 객체 모두를 빈으로 등록하기에 2개 이상의 의존 관계 대상 빈이 있을 수가 있다.
+이때 @Qualifier과 @Primary를 사용해서 특정 빈을 의존 관계 주입할 수도 있다. 
+그러나 2개 이상의 빈을 의존관계에 주입해야 할 떄도 있다. 
+예를 들어, 사용자가 할인 정책을 정액 할인과 정률 할인 중 선택할 수 있다면??
+그때에는 두 개의 할인 정책 객체가 의존 관계에 주입되어야 한다. 
+그럴 때에 Map, List를 사용하여 동적으로 의존 관계 주입을 변경할 수가 있다. 
+ 
+
+ex) 참고로 아래와 같은 패턴을 「전략 패턴」이라고 한다. 
+@Test
+ void findAllBean() {
+ ApplicationContext ac = new AnnotationConfigApplicationContext(AutoAppConfig.class, DiscountService.class);
+ 
+DiscountService discountService = ac.getBean(DiscountService.class);
+
+ Member member = new Member(1L, "userA", Grade.VIP);
+
+ int discountPrice = discountService.discount(member, 10000, "fixDiscountPolicy"); // 사용자가 할인 정책을 선택 
+
+ assertThat(discountService).isInstanceOf(DiscountService.class);
+
+ assertThat(discountPrice).isEqualTo(1000);
+ }
+
+ static class DiscountService {
+
+ private final Map<String, DiscountPolicy> policyMap;
+ private final List<DiscountPolicy> policies;
+
+@Autowired
+ public DiscountService(Map<String, DiscountPolicy> policyMap, List<DiscountPolicy> policies) {
+ this.policyMap = policyMap;
+ this.policies = policies;
+ }
+
+ public int discount(Member member, int price, String discountCode) {
+  DiscountPolicy discountPolicy = policyMap.get(discountCode); // 사용자가 필요로 하는 할인 정책 적용
+  return discountPolicy.discount(member, price);
+ }
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
