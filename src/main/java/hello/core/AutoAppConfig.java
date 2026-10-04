@@ -29,8 +29,8 @@ import org.springframework.context.annotation.FilterType;
 public class AutoAppConfig {
 
     // 수동 등록 vs 자동 등록 사이의 빈 중복 등록
-    @Bean(name = "memoryMemberRepository")
-    public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
-    }
+    //@Bean(name = "memoryMemberRepository")
+//    public MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
 }
