@@ -15,13 +15,7 @@ public class OrderServiceImpl implements OrderService{
     private final DiscountPolicy discountPolicy;
 
     @Autowired
-    public OrderServiceImpl(
-            MemberRepository memberRepository,
-            // @Qualifier("mainDiscountPolicy")가 붙은 빈을 찾아 의존 관계 주입
-            // → @Qualifier("main..")을 찾지 못하면, mainDiscountPolicy이름의 빈을 찾아 등록한다.
-            // 그러나 @Qualifier는 @Qualifier을 찾는 용도로만 써야 한다.
-            @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy
-    ) {
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
